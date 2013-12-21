@@ -9,11 +9,7 @@ import os
 wx matplotlib
 
 """
-import os
-import pprint
-import random
-import sys
-import wx
+import os, pprint, random, sys, wx, serial
 
 # The recommended way to use wx with mpl is with the WXAgg
 # backend. 
@@ -27,31 +23,34 @@ from matplotlib.backends.backend_wxagg import \
 import numpy as np
 import pylab
 
-
-def seconds2minutes(seconds):
-   return float(seconds.strip())/60.0
-
 class DataGen(object):
    def __init__(self, init=50):
       self.data = self.init = init
       self.pos = 0
-      self.data = self.read_temps(os.path.join('.', 'temp1.txt'))
+      self.openSerialPort()
 
-   def read_temps(self,file_name):
-      dtypes = np.dtype({ 'names' : ('Time', 'Input'),
-         'formats' : [np.float, np.float] })
-
-      data = np.loadtxt(file_name, delimiter=' ', skiprows=1, 
-            converters = { 0: seconds2minutes },
-            usecols=(0,2), dtype=dtypes)
-
-      self.data = data
-      return data
+   def openSerialPort(self):
+      argsLen = len(sys.argv)
+      if argsLen < 2 or argsLen > 3:
+         print "Usage: send_test [serial device name] [baudrate]"
+         sys.exit()
+      PORT = sys.argv[1]
+      BAUDRATE = sys.argv[2]
+      self.ser = serial.Serial(port=PORT, baudrate=BAUDRATE)
+      print "using device: %s" % self.ser.portstr
 
    def next(self):
-      result = self.data['Input'][self.pos]
-      self.pos += 1
-      return result
+      line = self.ser.readline().strip()
+      print line
+      fields = line.split(' ')
+      if len(fields) == 4:
+         try:
+            temp = float(fields[2].strip())
+            return temp
+         except:
+            return None
+      else:
+         return None
 
 class BoundControlBox(wx.Panel):
    """ A static box with a couple of radio buttons and a text
@@ -109,9 +108,10 @@ class GraphFrame(wx.Frame):
    def __init__(self):
       wx.Frame.__init__(self, None, -1, self.title)
 
-      self.datagen = DataGen()
-      self.data = [self.datagen.next()]
       self.paused = False
+      self.datagen = DataGen()
+      self.data = []
+      self.append_data()
 
       self.create_menu()
       self.create_status_bar()
@@ -232,9 +232,14 @@ class GraphFrame(wx.Frame):
       # (to respond to scale modifications, grid change, etc.)
       #
       if not self.paused:
-         self.data.append(self.datagen.next())
+         self.append_data()
 
       self.draw_plot()
+
+   def append_data(self):
+      data = self.datagen.next()
+      if data is not None:
+         self.data.append(data)
 
    def on_exit(self, event):
       self.Destroy()
