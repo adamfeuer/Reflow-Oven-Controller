@@ -19,15 +19,17 @@ class TempPlot:
 
    def temp_plot(self, minutes, temps):
        fig = pyplot.figure(figsize=(12,5))
+       ax = fig.add_subplot(1,1,1)
        pyplot.title('Reflow oven temperature plot')
        pyplot.ylabel('Temperature ($^\circ$C)')
        pyplot.xlabel('Minutes')
-       pyplot.plot(minutes, temps)
+       pyplot.plot(minutes, temps, linestyle="-")
        pyplot.legend(loc='lower right')
        pyplot.yticks([25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275])
        #pyplot.xticks([1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
        pyplot.xticks([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
-       #ax.yaxis.grid(color='gray', linestyle='dashed')
+       ax.xaxis.grid(color='gray', linestyle=':')
+       ax.yaxis.grid(color='gray', linestyle=':')
        return fig
 
    def main(self):
