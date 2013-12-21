@@ -4,16 +4,20 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 import os
 
+def seconds2minutes(seconds):
+   return float(seconds.strip())/60.0
+
 class TempPlot:
    def __init__(self):
       pass
+
    def read_temps(self,file_name):
        dtypes = np.dtype({ 'names' : ('Time', 'Input'),
                            'formats' : [np.float, np.float] })
 
-       data = np.loadtxt(file_name, delimiter=',', skiprows=1, 
-               converters = { },
-               usecols=(0,1), dtype=dtypes)
+       data = np.loadtxt(file_name, delimiter=' ', skiprows=1, 
+               converters = { 0: seconds2minutes },
+               usecols=(0,2), dtype=dtypes)
 
        return data
 
@@ -33,7 +37,8 @@ class TempPlot:
        return fig
 
    def main(self):
-      data = self.read_temps(os.path.join('.', 'temp1.csv'))
+      data = self.read_temps(os.path.join('.', 'temp1.txt'))
+      print data
       temps = data['Input']
       minutes = data['Time']
       fig = self.temp_plot(minutes ,temps)
