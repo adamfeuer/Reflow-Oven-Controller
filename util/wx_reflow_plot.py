@@ -10,10 +10,13 @@ wx_reflow_plot.py - make a temperature plot from
 the output of a RocketScream reflow oven controller
 in real time using pyserial, matplotlib, and WxPython
 
+WxPython graphing based on public domain code by Eli Bendersky (eliben@gmail.com)
+
 For more info see:
 
    http://www.rocketscream.com/blog/documents/reflow-controller-shield/
    https://github.com/rocketscream/Reflow-Oven-Controller
+
 
 The MIT License (MIT)
 
