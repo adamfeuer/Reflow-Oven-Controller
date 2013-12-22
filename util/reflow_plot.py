@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
 """
-reflow_plot.py - plot the output of a RocketScream reflow oven controller
+
+reflow_plot.py - make a temperature plot from 
+the output of a RocketScream reflow oven controller
 using matplotlib
+
+For more info see:
+
+   http://www.rocketscream.com/blog/documents/reflow-controller-shield/
+   https://github.com/rocketscream/Reflow-Oven-Controller
 
 The MIT License (MIT)
 

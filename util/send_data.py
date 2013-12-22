@@ -12,7 +12,7 @@ BAUDRATE = sys.argv[2]
 chars = ""
 ser = serial.Serial(port=PORT, baudrate=BAUDRATE)
 print "using device: %s" % ser.portstr
-filename = "temp1.txt"
+filename = "sample_data.txt"
 lines = open(filename).readlines()
 start = datetime.datetime.today()
 count = 0
