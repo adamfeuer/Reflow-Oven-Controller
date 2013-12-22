@@ -100,7 +100,7 @@
 // ***** INCLUDES *****
 #include <LiquidCrystal.h>
 #ifdef	USE_MAX31855
-	#include <MAX31855.h>
+	#include "MAX31855.h"
 #else
 	#include <max6675.h>
 #endif
@@ -139,11 +139,12 @@ typedef enum DEBOUNCE_STATE
   DEBOUNCE_STATE_RELEASE
 } debounceState_t;
 
+// updated for Kester NXG1 lead-free solder paste
 // ***** CONSTANTS *****
 #define TEMPERATURE_ROOM 50
 #define TEMPERATURE_SOAK_MIN 150
-#define TEMPERATURE_SOAK_MAX 200
-#define TEMPERATURE_REFLOW_MAX 250
+#define TEMPERATURE_SOAK_MAX 220
+#define TEMPERATURE_REFLOW_MAX 243
 #define TEMPERATURE_COOL_MIN 100
 #define SENSOR_SAMPLING_TIME 1000
 #define SOAK_TEMPERATURE_STEP 5
@@ -241,7 +242,7 @@ switch_t switchStatus;
 int timerSeconds;
 
 // Specify PID control interface
-PID reflowOvenPID(&input, &output, &setpoint, kp, ki, kd, DIRECT);
+PID reflowOvenPID(&input, &outpu  t, &setpoint, kp, ki, kd, DIRECT);
 // Specify LCD interface
 LiquidCrystal lcd(lcdRsPin, lcdEPin, lcdD4Pin, lcdD5Pin, lcdD6Pin, lcdD7Pin);
 // Specify MAX6675 thermocouple interface
