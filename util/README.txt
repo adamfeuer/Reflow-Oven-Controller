@@ -8,7 +8,13 @@ Python modules required are documented in the file 'requirements.txt'.
 
 You can test the realtime graphing without having a RocketScream reflow oven controller connected.
 
-1. Install the socat utility
+1. Install the socat utility (http://www.dest-unreach.org/socat/) - usually possible by using your OS package manager.
+
+  (Ubuntu Linux)
+  $ sudo apt-get install socat
+
+  (Mac OS X and Homebrew)
+  $ brew install socat
 
 2. Use socat to create 2 connected virtual serial ports:
 
