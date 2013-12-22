@@ -1,4 +1,11 @@
 
+Some basic utilities for graphing RocketScream reflow oven controller output.
+
+reflow_plot.py : command-line utility for creating a PNG graph of temperature over time, using matplotlib. 
+wx_reflow_plot.py : basic WxPython program for graphing reflow oven temperature in real time.
+
+Python modules required are documented in the file 'requirements.txt'.
+
 You can test the realtime graphing without having a RocketScream reflow oven controller connected.
 
 1. Install the socat utility
